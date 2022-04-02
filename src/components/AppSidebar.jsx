@@ -11,7 +11,7 @@ const Container = styled.div`
 	width: 230px;
 	position: fixed;
 	border-right: 1px solid #d9dbe9;
-	background: #e5e5e5;
+	background: #F9F9F9;
 `;
 const LogoContainer = styled.h1`
 	font-size: 25px;
