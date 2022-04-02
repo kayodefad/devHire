@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import favIconFilled from '../assets/images/fav-icon-filled.svg';
+import favIcon from '../assets/images/fav-icon.svg';
 import thumbnail from '../assets/images/thumbnail.svg';
 
 const Container = styled.div``;
@@ -15,7 +16,7 @@ const Wrapper = styled.div`
 
 		img {
 			width: 100%;
-			height: 200px;
+			height: 140px;
 			object-fit: cover;
 			border-radius: 10px;
 		}
@@ -23,11 +24,11 @@ const Wrapper = styled.div`
 		.avatar {
 			position: absolute;
 			left: 10px;
-			bottom: -25px;
+			bottom: -20px;
 
 			img {
-				width: 60px;
-				height: 60px;
+				width: 40px;
+				height: 40px;
 				border: 2px solid #fff;
 				border-radius: 50%;
 			}
@@ -35,14 +36,14 @@ const Wrapper = styled.div`
 	}
 
 	.fav-icon {
-		background: #fff;
+		background: ${({ filled }) => (filled ? '#fff' : '#BBB')};
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		position: absolute;
 		top: 20px;
 		right: 20px;
-		padding: 12px;
+		padding: 10px;
 		border-radius: 10px;
 		cursor: pointer;
 
@@ -59,26 +60,28 @@ const Wrapper = styled.div`
 		justify-content: space-between;
 
 		.left {
-			font-size: 16px;
 			.name {
 				font-weight: 700;
+				font-size: 13px;
 			}
 			.rate {
 				color: rgba(0, 0, 0, 0.49);
+				font-size: 11px;
 			}
 		}
 
 		.right {
 			color: #1d9bf0;
 			font-weight: 700;
+			font-size: 13px;
 		}
 	}
 `;
 
-const FreelancerCard = () => {
+const FreelancerCard = ({ filled }) => {
 	return (
 		<Container>
-			<Wrapper>
+			<Wrapper filled={filled}>
 				<div className='thumbnail'>
 					<img src={thumbnail} alt='random pic' />
 					<div className='avatar'>
@@ -86,7 +89,11 @@ const FreelancerCard = () => {
 					</div>
 				</div>
 				<div className='fav-icon'>
-					<img src={favIconFilled} alt='fav-icon' />
+					{filled ? (
+						<img src={favIconFilled} alt='fav-icon filled' />
+					) : (
+						<img src={favIcon} alt='fav-icon' />
+					)}
 				</div>
 				<div className='dev-info'>
 					<div className='left'>

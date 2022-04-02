@@ -6,7 +6,7 @@ const Container = styled.div``;
 const Wrapper = styled.div`
 	.freelancers-container {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(4, 1fr);
 		gap: 40px;
 	}
 `;
@@ -20,7 +20,7 @@ const Favorites = () => {
 					{Array(3)
 						.fill(1)
 						.map((el, i) => {
-							return <FreelancerCard />;
+							return <FreelancerCard filled key={i} />;
 						})}
 				</div>
 			</Wrapper>

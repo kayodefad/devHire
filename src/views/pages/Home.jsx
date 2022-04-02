@@ -2,11 +2,13 @@ import { PageHeader } from '../../components';
 import styled from 'styled-components';
 import FreelancerCard from '../../components/FreelancerCard';
 
-const Container = styled.div``;
+const Container = styled.div`
+	margin-bottom: 40px;
+`;
 const Wrapper = styled.div`
 	.freelancers-container {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(4, 1fr);
 		gap: 40px;
 	}
 `;
@@ -20,7 +22,11 @@ const Home = () => {
 					{Array(20)
 						.fill(1)
 						.map((el, i) => {
-							return <FreelancerCard />;
+							return i % 2 === 0 ? (
+								<FreelancerCard key={i} />
+							) : (
+								<FreelancerCard filled key={i} />
+							);
 						})}
 				</div>
 			</Wrapper>
