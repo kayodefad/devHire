@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import favIconFilled from '../assets/images/fav-icon-filled.svg';
 import favIcon from '../assets/images/fav-icon.svg';
 import thumbnail from '../assets/images/thumbnail.svg';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -9,6 +11,7 @@ const Wrapper = styled.div`
 	background: #fff;
 	border-radius: 10px;
 	padding: 10px;
+	box-shadow: 0px 0px 40px rgba(14, 31, 53, 0.1);
 
 	.thumbnail {
 		position: relative;
@@ -31,6 +34,7 @@ const Wrapper = styled.div`
 				height: 40px;
 				border: 2px solid #fff;
 				border-radius: 50%;
+				background-color: #369bf0;
 			}
 		}
 	}
@@ -78,14 +82,41 @@ const Wrapper = styled.div`
 	}
 `;
 
-const FreelancerCard = ({ filled }) => {
+export const FreeLancerLoader = () => {
+	return (
+		<Container>
+			<Wrapper>
+				<div className='thumbnail'>
+					<Skeleton height={140} />
+					<div className='avatar'>
+						<Skeleton circle width={40} height={40} />
+					</div>
+				</div>
+				<div className='fav-icon'>
+					<Skeleton width={15} />
+				</div>
+				<div className='dev-info'>
+					<div className='left'>
+						<Skeleton width={60} />
+						<Skeleton width={50} />
+					</div>
+					<div className='right'>
+						<Skeleton width={50} />
+					</div>
+				</div>
+			</Wrapper>
+		</Container>
+	);
+};
+
+const FreelancerCard = ({ filled, data }) => {
 	return (
 		<Container>
 			<Wrapper filled={filled}>
 				<div className='thumbnail'>
-					<img src={thumbnail} alt='random pic' />
+					<img src={data.thumbnail} alt='random pic' />
 					<div className='avatar'>
-						<img src='https://picsum.photos/100/100' alt='avatar' />
+						<img src={data.avatar} alt='avatar' />
 					</div>
 				</div>
 				<div className='fav-icon'>
@@ -97,8 +128,8 @@ const FreelancerCard = ({ filled }) => {
 				</div>
 				<div className='dev-info'>
 					<div className='left'>
-						<p className='name'>Donnienos</p>
-						<p className='rate'>₦30,000</p>
+						<p className='name'>{data.name}</p>
+						<p className='rate'>{data.price}</p>
 					</div>
 					<div className='right'>Hire</div>
 				</div>
