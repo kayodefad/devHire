@@ -4,6 +4,7 @@ import favIcon from '../assets/images/fav-icon.svg';
 import thumbnail from '../assets/images/thumbnail.svg';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -35,6 +36,7 @@ const Wrapper = styled.div`
 				border: 2px solid #fff;
 				border-radius: 50%;
 				background-color: #369bf0;
+				object-fit: cover;
 			}
 		}
 	}
@@ -78,6 +80,7 @@ const Wrapper = styled.div`
 			color: #1d9bf0;
 			font-weight: 700;
 			font-size: 13px;
+			cursor: pointer;
 		}
 	}
 `;
@@ -110,13 +113,18 @@ export const FreeLancerLoader = () => {
 };
 
 const FreelancerCard = ({ filled, data }) => {
+	const { currency } = useSelector((state) => state.currency);
+
+	const { avatar, display_name, starting_from, service_photo } = data._source;
+	const price = (starting_from / currency.divider).toFixed(2);
+
 	return (
 		<Container>
 			<Wrapper filled={filled}>
 				<div className='thumbnail'>
-					<img src={data.thumbnail} alt='random pic' />
+					<img src={service_photo} alt='random pic' />
 					<div className='avatar'>
-						<img src={data.avatar} alt='avatar' />
+						<img src={avatar} alt='avatar' />
 					</div>
 				</div>
 				<div className='fav-icon'>
@@ -128,8 +136,11 @@ const FreelancerCard = ({ filled, data }) => {
 				</div>
 				<div className='dev-info'>
 					<div className='left'>
-						<p className='name'>{data.name}</p>
-						<p className='rate'>{data.price}</p>
+						<p className='name'>{display_name}</p>
+						<p className='rate'>
+							{currency.symbol}
+							{price}
+						</p>
 					</div>
 					<div className='right'>Hire</div>
 				</div>

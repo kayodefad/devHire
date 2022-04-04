@@ -9,7 +9,7 @@ const App = () => {
 			<Routes>
 				<Route path='/' element={<DefaultLayout />}>
 					<Route index element={<Home />} />
-					<Route path='favorites' element={<Favorites />} />
+					{/* <Route path='favorites' element={<Favorites />} /> */}
 				</Route>
 			</Routes>
 		</Router>

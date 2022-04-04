@@ -5,10 +5,11 @@ import FreelancerCard, {
 } from '../../components/FreelancerCard';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { getFreelancers } from '../../dataService';
 import 'react-loading-skeleton/dist/skeleton.css';
 import ReactPaginate from 'react-paginate';
 import { PaginateContainer } from '../../styles/ReactPaginateStyle';
+import { fetchFreelancers } from '../../redux/slices/freelancerSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Container = styled.div`
 	margin-bottom: 40px;
@@ -36,28 +37,15 @@ const Wrapper = styled.div`
 `;
 
 const Home = () => {
-	const [freelancers, setFreelancers] = useState([]);
-	const [loading, setLoading] = useState(false);
+	const dispatch = useDispatch();
+	const { freelancers, loading } = useSelector((state) => state.freelancer);
 	const [currentItems, setCurrentItems] = useState(null);
 	const [pageCount, setPageCount] = useState(0);
 	const [itemOffset, setItemOffset] = useState(0);
 	const itemsPerPage = 10;
 
-	const getAllFreelancers = () => {
-		setLoading(true);
-		getFreelancers()
-			.then((res) => {
-				setFreelancers(res);
-				setLoading(false);
-			})
-			.catch((e) => {
-				console.log(e);
-				setLoading(false);
-			});
-	};
-
 	useEffect(() => {
-		getAllFreelancers();
+		dispatch(fetchFreelancers());
 	}, []);
 
 	useEffect(() => {
@@ -86,13 +74,18 @@ const Home = () => {
 					</div>
 				) : (
 					<div className='freelancers-container'>
-						{currentItems && currentItems.map((freelancer) => {
-							return freelancer.id % 2 === 0 ? (
-								<FreelancerCard data={freelancer} key={freelancer.id} />
-							) : (
-								<FreelancerCard data={freelancer} filled key={freelancer.id} />
-							);
-						})}
+						{currentItems &&
+							currentItems.map((freelancer) => {
+								return freelancer.id % 2 === 0 ? (
+									<FreelancerCard data={freelancer} key={freelancer.id} />
+								) : (
+									<FreelancerCard
+										data={freelancer}
+										filled
+										key={freelancer.id}
+									/>
+								);
+							})}
 					</div>
 				)}
 				<PaginateContainer>
