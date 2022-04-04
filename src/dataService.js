@@ -20,7 +20,3 @@ function getData(endpoint) {
 	});
 }
 
-// function isRequestSuccessful() {
-// 	const errorFrequency = 0.5;
-// 	return Math.random() >= errorFrequency;
-// }

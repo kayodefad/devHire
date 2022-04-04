@@ -5,12 +5,13 @@ import styled from 'styled-components';
 
 const TestDiv = styled.div`
 	position: relative;
-	padding: 0 40px;
+	padding: 0 20px;
 	width: calc(100vw-230px);
 	overflow: hidden;
 
 	@media (min-width: 768px) {
 		margin-left: 230px;
+		padding: 0 40px;
 	}
 `;
 

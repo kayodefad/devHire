@@ -87,7 +87,7 @@ export const FreeLancerLoader = () => {
 		<Container>
 			<Wrapper>
 				<div className='thumbnail'>
-					<Skeleton height={140} />
+					<Skeleton height={140} style={{ borderRadius: '10px' }} />
 					<div className='avatar'>
 						<Skeleton circle width={40} height={40} />
 					</div>

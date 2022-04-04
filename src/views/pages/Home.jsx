@@ -6,8 +6,9 @@ import FreelancerCard, {
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { getFreelancers } from '../../dataService';
-import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import ReactPaginate from 'react-paginate';
+import { PaginateContainer } from '../../styles/ReactPaginateStyle';
 
 const Container = styled.div`
 	margin-bottom: 40px;
@@ -18,6 +19,7 @@ const Wrapper = styled.div`
 		display: grid;
 		grid-template-columns: 1fr;
 		gap: 40px;
+		margin-bottom: 40px;
 	}
 
 	@media (min-width: 768px) {
@@ -36,6 +38,10 @@ const Wrapper = styled.div`
 const Home = () => {
 	const [freelancers, setFreelancers] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [currentItems, setCurrentItems] = useState(null);
+	const [pageCount, setPageCount] = useState(0);
+	const [itemOffset, setItemOffset] = useState(0);
+	const itemsPerPage = 10;
 
 	const getAllFreelancers = () => {
 		setLoading(true);
@@ -54,6 +60,18 @@ const Home = () => {
 		getAllFreelancers();
 	}, []);
 
+	useEffect(() => {
+		const endOffset = itemOffset + itemsPerPage;
+		setCurrentItems(freelancers.slice(itemOffset, endOffset));
+		setPageCount(Math.ceil(freelancers.length / itemsPerPage));
+	}, [itemOffset, itemsPerPage, freelancers]);
+
+	// Invoke when user click to request another page.
+	const handlePageClick = (event) => {
+		const newOffset = (event.selected * itemsPerPage) % freelancers.length;
+		setItemOffset(newOffset);
+	};
+
 	return (
 		<Container>
 			<Wrapper>
@@ -68,7 +86,7 @@ const Home = () => {
 					</div>
 				) : (
 					<div className='freelancers-container'>
-						{freelancers.map((freelancer) => {
+						{currentItems && currentItems.map((freelancer) => {
 							return freelancer.id % 2 === 0 ? (
 								<FreelancerCard data={freelancer} key={freelancer.id} />
 							) : (
@@ -77,6 +95,27 @@ const Home = () => {
 						})}
 					</div>
 				)}
+				<PaginateContainer>
+					<ReactPaginate
+						breakLabel='...'
+						nextLabel='>'
+						onPageChange={handlePageClick}
+						pageRangeDisplayed={2}
+						pageCount={pageCount}
+						previousLabel='<'
+						renderOnZeroPageCount={null}
+						pageClassName='page-item'
+						pageLinkClassName='page-link'
+						previousClassName='previous-item'
+						previousLinkClassName='previous-link'
+						nextClassName='next-item'
+						nextLinkClassName='next-link'
+						breakClassName='page-item'
+						breakLinkClassName='page-link'
+						containerClassName='pagination'
+						activeClassName='active'
+					/>
+				</PaginateContainer>
 			</Wrapper>
 		</Container>
 	);
