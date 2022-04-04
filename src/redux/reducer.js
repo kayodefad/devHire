@@ -3,7 +3,7 @@ import freelancer from './slices/freelancerSlice';
 
 const reducer = {
 	currency,
-	freelancer
+	freelancer,
 };
 
 export default reducer;

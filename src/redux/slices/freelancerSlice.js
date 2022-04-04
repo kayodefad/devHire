@@ -25,14 +25,29 @@ const initialState = {
 const freelancerSlice = createSlice({
 	name: 'freelancer',
 	initialState,
-	reducers: {},
+	reducers: {
+		toggleFreelancer: (state, action) => {
+			state.freelancers = state.freelancers.map((freelancer) => {
+				if (freelancer._source.cust_id === action.payload) {
+					freelancer.favorite = !freelancer.favorite;
+				}
+				return freelancer;
+			});
+			state.favorites = state.freelancers.filter(
+				(freelencer) => freelencer.favorite === true
+			);
+		},
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchFreelancers.pending, (state) => {
 				state.loading = true;
 			})
 			.addCase(fetchFreelancers.fulfilled, (state, action) => {
-				state.freelancers = action.payload;
+				state.freelancers = action.payload.map((freelancer) => ({
+					...freelancer,
+					favorite: false,
+				}));
 				state.loading = false;
 			})
 			.addCase(fetchFreelancers.rejected, (state, action) => {
@@ -41,5 +56,7 @@ const freelancerSlice = createSlice({
 			});
 	},
 });
+
+export const { toggleFreelancer } = freelancerSlice.actions;
 
 export default freelancerSlice.reducer;

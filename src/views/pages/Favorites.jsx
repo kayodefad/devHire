@@ -1,18 +1,18 @@
-import { PageHeader } from '../../components';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import ReactPaginate from 'react-paginate';
+import { useSelector } from 'react-redux';
+
+import { PageHeader } from '../../components';
 import FreelancerCard, {
 	FreeLancerLoader,
 } from '../../components/FreelancerCard';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { getFreelancers } from '../../dataService';
-import 'react-loading-skeleton/dist/skeleton.css';
-import ReactPaginate from 'react-paginate';
 import { PaginateContainer } from '../../styles/ReactPaginateStyle';
 
 const Container = styled.div`
 	margin-bottom: 40px;
 `;
+
 const Wrapper = styled.div`
 	.freelancers-container {
 		width: 100%;
@@ -35,40 +35,22 @@ const Wrapper = styled.div`
 	}
 `;
 
-const Favorites = () => {
-	const [freelancers, setFreelancers] = useState([]);
-	const [loading, setLoading] = useState(false);
+const Favorites = ({ toggleFavoriteFreelancer }) => {
+	const { favorites, loading } = useSelector((state) => state.freelancer);
 	const [currentItems, setCurrentItems] = useState(null);
 	const [pageCount, setPageCount] = useState(0);
 	const [itemOffset, setItemOffset] = useState(0);
 	const itemsPerPage = 10;
 
-	const getAllFreelancers = () => {
-		setLoading(true);
-		getFreelancers()
-			.then((res) => {
-				setFreelancers(res);
-				setLoading(false);
-			})
-			.catch((e) => {
-				console.log(e);
-				setLoading(false);
-			});
-	};
-
-	useEffect(() => {
-		getAllFreelancers();
-	}, []);
-
 	useEffect(() => {
 		const endOffset = itemOffset + itemsPerPage;
-		setCurrentItems(freelancers.slice(itemOffset, endOffset));
-		setPageCount(Math.ceil(freelancers.length / itemsPerPage));
-	}, [itemOffset, itemsPerPage, freelancers]);
+		setCurrentItems(favorites.slice(itemOffset, endOffset));
+		setPageCount(Math.ceil(favorites.length / itemsPerPage));
+	}, [itemOffset, itemsPerPage, favorites]);
 
 	// Invoke when user click to request another page.
 	const handlePageClick = (event) => {
-		const newOffset = (event.selected * itemsPerPage) % freelancers.length;
+		const newOffset = (event.selected * itemsPerPage) % favorites.length;
 		setItemOffset(newOffset);
 	};
 
@@ -84,6 +66,8 @@ const Favorites = () => {
 								return <FreeLancerLoader key={i} />;
 							})}
 					</div>
+				) : !favorites.length ? (
+					<p style={{ textAlign: 'center' }}>No Favorite Developer yet</p>
 				) : (
 					<div className='freelancers-container'>
 						{currentItems &&
@@ -92,7 +76,8 @@ const Favorites = () => {
 									<FreelancerCard
 										data={freelancer}
 										filled
-										key={freelancer.id}
+										key={freelancer._source.cust_id}
+										toggleFavoriteFreelancer={toggleFavoriteFreelancer}
 									/>
 								);
 							})}

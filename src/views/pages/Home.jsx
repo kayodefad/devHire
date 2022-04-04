@@ -1,19 +1,19 @@
-import { PageHeader } from '../../components';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import ReactPaginate from 'react-paginate';
+
+import { PageHeader } from '../../components';
 import FreelancerCard, {
 	FreeLancerLoader,
 } from '../../components/FreelancerCard';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import 'react-loading-skeleton/dist/skeleton.css';
-import ReactPaginate from 'react-paginate';
 import { PaginateContainer } from '../../styles/ReactPaginateStyle';
 import { fetchFreelancers } from '../../redux/slices/freelancerSlice';
-import { useDispatch, useSelector } from 'react-redux';
 
 const Container = styled.div`
 	margin-bottom: 40px;
 `;
+
 const Wrapper = styled.div`
 	.freelancers-container {
 		width: 100%;
@@ -36,7 +36,7 @@ const Wrapper = styled.div`
 	}
 `;
 
-const Home = () => {
+const Home = ({ toggleFavoriteFreelancer }) => {
 	const dispatch = useDispatch();
 	const { freelancers, loading } = useSelector((state) => state.freelancer);
 	const [currentItems, setCurrentItems] = useState(null);
@@ -76,13 +76,12 @@ const Home = () => {
 					<div className='freelancers-container'>
 						{currentItems &&
 							currentItems.map((freelancer) => {
-								return freelancer.id % 2 === 0 ? (
-									<FreelancerCard data={freelancer} key={freelancer.id} />
-								) : (
+								return (
 									<FreelancerCard
+										key={freelancer._source.cust_id}
 										data={freelancer}
-										filled
-										key={freelancer.id}
+										toggleFavoriteFreelancer={toggleFavoriteFreelancer}
+										filled={freelancer.favorite}
 									/>
 								);
 							})}

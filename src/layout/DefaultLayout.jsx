@@ -1,9 +1,10 @@
-import { AppSidebar, AppFooter } from '../components';
-import { Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 
-const TestDiv = styled.div`
+import { AppSidebar, AppFooter } from '../components';
+
+const AppContentContainer = styled.div`
 	position: relative;
 	padding: 0 20px;
 	width: calc(100vw-230px);
@@ -49,13 +50,11 @@ const DefaultLayout = () => {
 		return () => window.removeEventListener('resize', handleWindowResize);
 	}, []);
 
-	// style={{ minHeight: `calc(100vh - ${footerHeight}px)` }}
-
 	return (
 		<>
 			<div>
 				<AppSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-				<TestDiv>
+				<AppContentContainer>
 					<AppContent style={{ minHeight: `calc(100vh - ${footerHeight}px)` }}>
 						<div
 							className='hamburger'
@@ -77,7 +76,7 @@ const DefaultLayout = () => {
 						<Outlet />
 					</AppContent>
 					<AppFooter />
-				</TestDiv>
+				</AppContentContainer>
 			</div>
 		</>
 	);

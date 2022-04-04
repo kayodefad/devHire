@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+
 import caretDown from '../assets/images/caret-down.svg';
+
 import { fetchCurrencies, setCurrency } from '../redux/slices/currencySlice';
 
 const Container = styled.div`
@@ -68,27 +70,14 @@ const Container = styled.div`
 	}
 `;
 
-const items = [
-	{ key: 'naira', title: 'Naira' },
-	{ key: 'dollar', title: 'Dollar' },
-];
-
 const AppFooter = () => {
-	// const [selected, setSelected] = useState(currencies[0].id);
 	const [currencyDropdown, setCurrencyDropdown] = useState(false);
 	const dispatch = useDispatch();
-	const { currencies, loading, currency } = useSelector(
-		(state) => state.currency
-	);
+	const { currencies, currency } = useSelector((state) => state.currency);
 
 	useEffect(() => {
 		dispatch(fetchCurrencies());
 	}, []);
-
-	// const handleChange = (e) => {
-	// 	setSelected(e.target.value);
-	// 	console.log(e.target.value);
-	// };
 
 	const handleSelect = (id) => {
 		dispatch(setCurrency(id));
@@ -136,12 +125,3 @@ const AppFooter = () => {
 };
 
 export default AppFooter;
-
-// {currencies.map((currency) => {
-// 	return (
-// 		<div key={currency.name}>
-// 			<span>{currency.flag_url}</span>
-// 			<span>{currency.name}</span>
-// 		</div>
-// 	);
-// })}

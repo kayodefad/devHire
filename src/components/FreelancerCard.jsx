@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-import favIconFilled from '../assets/images/fav-icon-filled.svg';
-import favIcon from '../assets/images/fav-icon.svg';
-import thumbnail from '../assets/images/thumbnail.svg';
+import { useSelector } from 'react-redux';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { useDispatch, useSelector } from 'react-redux';
+
+import favIconFilled from '../assets/images/fav-icon-filled.svg';
+import favIcon from '../assets/images/fav-icon.svg';
 
 const Container = styled.div``;
+
 const Wrapper = styled.div`
 	position: relative;
 	background: #fff;
@@ -112,10 +113,11 @@ export const FreeLancerLoader = () => {
 	);
 };
 
-const FreelancerCard = ({ filled, data }) => {
+const FreelancerCard = ({ filled, data, toggleFavoriteFreelancer }) => {
 	const { currency } = useSelector((state) => state.currency);
 
-	const { avatar, display_name, starting_from, service_photo } = data._source;
+	const { avatar, display_name, starting_from, service_photo, cust_id } =
+		data._source;
 	const price = (starting_from / currency.divider).toFixed(2);
 
 	return (
@@ -127,7 +129,10 @@ const FreelancerCard = ({ filled, data }) => {
 						<img src={avatar} alt='avatar' />
 					</div>
 				</div>
-				<div className='fav-icon'>
+				<div
+					className='fav-icon'
+					onClick={() => toggleFavoriteFreelancer(cust_id)}
+				>
 					{filled ? (
 						<img src={favIconFilled} alt='fav-icon filled' />
 					) : (

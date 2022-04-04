@@ -1,18 +1,19 @@
-import { NavLink } from 'react-router-dom';
-import _nav from '../nav';
-// import '../css/nav.css';
-import Backdrop from './Backdrop';
-import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import styled from 'styled-components';
+
+import _nav from '../nav';
+import Backdrop from './Backdrop';
 
 const Container = styled.div`
 	height: 100vh;
 	width: 230px;
 	position: fixed;
 	border-right: 1px solid #d9dbe9;
-	background: #F9F9F9;
+	background: #f9f9f9;
 `;
+
 const LogoContainer = styled.h1`
 	font-size: 25px;
 	font-weight: 700;
@@ -26,6 +27,7 @@ const LogoContainer = styled.h1`
 		}
 	}
 `;
+
 const Nav = styled.nav`
 	display: flex;
 	flex-direction: column;
