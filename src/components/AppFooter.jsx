@@ -49,9 +49,9 @@ const Container = styled.div`
 		.currencies-dropdown {
 			position: absolute;
 			border: 1px solid #000;
-			left: -40%;
+			left: 0;
 			bottom: -20px;
-			width: 150%;
+			width: 100%;
 			background-color: #3a3a3b;
 			border-radius: 10px;
 			padding: 7px;
