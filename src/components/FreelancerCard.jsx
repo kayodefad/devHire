@@ -40,6 +40,12 @@ const Wrapper = styled.div`
 				object-fit: cover;
 			}
 		}
+
+		@media (max-width: 640px) {
+			img {
+				height: 200px;
+			}
+		}
 	}
 
 	.fav-icon {
