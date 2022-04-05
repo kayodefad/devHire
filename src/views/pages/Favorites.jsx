@@ -64,7 +64,7 @@ const Favorites = ({ toggleFavoriteFreelancer }) => {
 	return (
 		<Container>
 			<Wrapper>
-				<PageHeader>Hire Top Developers</PageHeader>
+				<PageHeader>Favorites</PageHeader>
 				{loading ? (
 					<div className='freelancers-container'>
 						{Array(5)
