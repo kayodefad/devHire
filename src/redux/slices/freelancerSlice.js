@@ -17,7 +17,6 @@ export const fetchFreelancers = createAsyncThunk(
 
 const initialState = {
 	freelancers: [],
-	favorites: [],
 	loading: false,
 	error: '',
 };
@@ -33,9 +32,6 @@ const freelancerSlice = createSlice({
 				}
 				return freelancer;
 			});
-			state.favorites = state.freelancers.filter(
-				(freelencer) => freelencer.favorite === true
-			);
 		},
 	},
 	extraReducers: (builder) => {

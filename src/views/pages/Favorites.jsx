@@ -36,11 +36,18 @@ const Wrapper = styled.div`
 `;
 
 const Favorites = ({ toggleFavoriteFreelancer }) => {
-	const { favorites, loading } = useSelector((state) => state.freelancer);
+	const { loading, freelancers } = useSelector((state) => state.freelancer);
+	const [favorites, setFavorites] = useState([]);
 	const [currentItems, setCurrentItems] = useState(null);
 	const [pageCount, setPageCount] = useState(0);
 	const [itemOffset, setItemOffset] = useState(0);
 	const itemsPerPage = 10;
+
+	useEffect(() => {
+		setFavorites(
+			freelancers.filter((freelancer) => freelancer.favorite === true)
+		);
+	}, [freelancers]);
 
 	useEffect(() => {
 		const endOffset = itemOffset + itemsPerPage;
