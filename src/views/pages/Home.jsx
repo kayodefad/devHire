@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import ReactPaginate from 'react-paginate';
 
@@ -8,7 +8,6 @@ import FreelancerCard, {
 	FreeLancerLoader,
 } from '../../components/FreelancerCard';
 import { PaginateContainer } from '../../styles/ReactPaginateStyle';
-import { fetchFreelancers } from '../../redux/slices/freelancerSlice';
 
 const Container = styled.div`
 	margin-bottom: 40px;
