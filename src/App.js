@@ -1,10 +1,13 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import preloader from './assets/images/preloader.gif';
 
-import { toggleFreelancer } from './redux/slices/freelancerSlice';
+import {
+	fetchFreelancers,
+	toggleFreelancer,
+} from './redux/slices/freelancerSlice';
 
 const Home = React.lazy(() => import('./views/pages/Home'));
 const Favorites = React.lazy(() => import('./views/pages/Favorites'));
@@ -21,6 +24,10 @@ const preloaderStyle = {
 
 const App = () => {
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(fetchFreelancers());
+	}, []);
 
 	const toggleFavoriteFreelancer = (id) => {
 		dispatch(toggleFreelancer(id));

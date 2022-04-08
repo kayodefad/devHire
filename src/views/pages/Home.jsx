@@ -37,16 +37,11 @@ const Wrapper = styled.div`
 `;
 
 const Home = ({ toggleFavoriteFreelancer }) => {
-	const dispatch = useDispatch();
 	const { freelancers, loading } = useSelector((state) => state.freelancer);
 	const [currentItems, setCurrentItems] = useState(null);
 	const [pageCount, setPageCount] = useState(0);
 	const [itemOffset, setItemOffset] = useState(0);
 	const itemsPerPage = 10;
-
-	useEffect(() => {
-		dispatch(fetchFreelancers());
-	}, []);
 
 	useEffect(() => {
 		const endOffset = itemOffset + itemsPerPage;
